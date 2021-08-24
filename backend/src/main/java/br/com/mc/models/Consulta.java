@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import lombok.Getter;
@@ -19,7 +20,8 @@ public class Consulta {
     @Id
     private Long id;
     
-    @OneToOne(mappedBy = "Agendamento", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "agendamento_id")
     private Agendamento agendamento;    
 
     @Column

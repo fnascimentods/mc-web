@@ -1,11 +1,15 @@
 package br.com.mc.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
@@ -20,17 +24,26 @@ public class Agendamento {
     @Id
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Paciente paciente;
 
-    @OneToOne(mappedBy = "Medico", fetch = FetchType.LAZY)
-    private Medico medico;
-
-    @OneToOne(mappedBy = "UnidadeDeSaude", fetch = FetchType.LAZY)
-    private UnidadeDeSaude unidadeDeSaude;
+    @ManyToMany
+    @JoinTable(name = "medico_agenda_unidadedesaude", 
+      joinColumns = @JoinColumn(name = "medico_id"), 
+      inverseJoinColumns = @JoinColumn(name = "agendamento_id"))
+    private List<Medico> medicos;    
     
-    @OneToOne(mappedBy = "Agenda", fetch = FetchType.LAZY)
-    private Agenda agenda;    
+    //@ManyToOne
+    //private Medico medico;
+
+    //@ManyToOne
+    //private UnidadeDeSaude unidadeDeSaude;
+    
+    //@OneToOne(fetch = FetchType.LAZY)
+    //private Agenda agenda;    
+
+    @OneToOne(mappedBy = "agendamento")
+    private Consulta consulta;    
 
     @Column
     private Date dataHoraCriacao;

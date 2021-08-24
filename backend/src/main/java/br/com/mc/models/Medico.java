@@ -7,7 +7,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.Getter;
@@ -21,17 +24,27 @@ public class Medico {
     @Id
     private Long id;
 
-    @OneToOne(mappedBy = "Usuario", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @ManyToMany(mappedBy = "Especialidade", fetch = FetchType.LAZY)
-    private List<Especialidade> especialidades;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Especialidade especialidade;
 
-    @ManyToMany(mappedBy = "Agenda", fetch = FetchType.LAZY)
-    private List<Agenda> agendas;
+    @ManyToMany
+    @JoinTable(name = "medico_agenda_unidadedesaude",       
+      joinColumns = @JoinColumn(name = "medico_id"), 
+      inverseJoinColumns = @JoinColumn(name = "agenda_id"))
+    private List<Agenda> agendas;    
 
-    @ManyToMany(mappedBy = "UnidadeDeSaude", fetch = FetchType.LAZY)
-    private List<UnidadeDeSaude> unidadeDeSaudes;    
+    @ManyToMany
+    @JoinTable(name = "medico_agenda_unidadedesaude", 
+      joinColumns = @JoinColumn(name = "medico_id"), 
+      inverseJoinColumns = @JoinColumn(name = "unidadedesaude_id"))
+    private List<UnidadeDeSaude> unidadesDeSaude;    
+
+    @ManyToMany(mappedBy = "medicos")    
+    private List<Agendamento> agendamentos;
 
     @Column
     private String nome;

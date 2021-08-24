@@ -2,7 +2,10 @@ package br.com.mc.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +18,12 @@ public class Usuario {
     @Id
     private Long id;
 
+    @OneToOne(mappedBy = "usuario")
+    private Paciente paciente;
+
+    @OneToOne(mappedBy = "usuario")
+    private Medico medico;    
+    
     @Column
     private String login;
     
