@@ -2,13 +2,17 @@ package br.com.mc.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import org.hibernate.type.TrueFalseType;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,22 +25,26 @@ public class UnidadeDeSaude {
     @Id
     private Long id;
 
-    @ManyToMany(mappedBy = "unidadesDeSaude")    
+    @ManyToMany
+    @JoinTable(name="unidadedesaude_medico", 
+    joinColumns= {@JoinColumn(name="unidadedesaude_id")}, 
+    inverseJoinColumns= {@JoinColumn(name="medico_id")})
     private List<Medico> medicos;
 
-    @Column
+    @OneToMany(mappedBy = "unidadeDeSaude", fetch = FetchType.LAZY)
+    private List<Agenda> agendas;
+
+    @OneToMany(mappedBy = "unidadeDeSaude", fetch = FetchType.LAZY)
+    private List<Agendamento> agendamentos;
+
     private String nome;
     
-    @Column
     private String logradouro;        
 
-    @Column
     private Integer numero;
 
-    @Column
     private String bairro;
 
-    @Column
     private String cep;
 
     @Override

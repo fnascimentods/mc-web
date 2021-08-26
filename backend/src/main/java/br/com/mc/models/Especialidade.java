@@ -25,8 +25,8 @@ public class Especialidade {
     @Column
     private String descricao;
 
-    @OneToOne(mappedBy = "especialidade")
-    private Medico medico;    
+    @ManyToMany(mappedBy = "especialidades")
+    private List<Medico> medicos;    
 
     @Override
     public boolean equals(Object obj) {
