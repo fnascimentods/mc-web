@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.Getter;
@@ -23,27 +24,20 @@ public class Agenda {
     @Id
     private Long id;
 
-    @ManyToMany(mappedBy = "agendas")
-    private List<Medico> medicos;        
+    @ManyToOne
+    private Medico medico;        
 
-    //@OneToOne(mappedBy = "agenda")
-    //private Agendamento agendamento;        
+    @OneToMany(mappedBy = "agenda")
+    private List<Agendamento> agendamentos;        
 
-    //@ManyToOne
-    //private UnidadeDeSaude unidadeDeSaude;            
+    @ManyToOne
+    private UnidadeDeSaude unidadeDeSaude;            
 
-    @Column(name = "datainicio")
-    private Date dataInicio;
-
-    @Column(name = "datafim")
-    private Date dataFim;
+    private Date data;   
     
-    @Column(name = "horainicio")
     private Time horaInicio;
 
-    @Column(name = "horafim")
     private Time horaFim;
 
-    @Column
-    private Time duracao;
+    private Time intervalo;
 }

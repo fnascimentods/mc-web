@@ -28,22 +28,19 @@ public class Medico {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Especialidade especialidade;
-
     @ManyToMany
-    @JoinTable(name = "medico_agenda_unidadedesaude",       
-      joinColumns = @JoinColumn(name = "medico_id"), 
-      inverseJoinColumns = @JoinColumn(name = "agenda_id"))
+    @JoinTable(name="medico_especialidade", 
+    joinColumns= {@JoinColumn(name="medico_id")}, 
+    inverseJoinColumns= {@JoinColumn(name="especialidade_id")})
+    private List<Especialidade> especialidades;    
+
+    @OneToMany(mappedBy = "medico")
     private List<Agenda> agendas;    
 
-    @ManyToMany
-    @JoinTable(name = "medico_agenda_unidadedesaude", 
-      joinColumns = @JoinColumn(name = "medico_id"), 
-      inverseJoinColumns = @JoinColumn(name = "unidadedesaude_id"))
+    @ManyToMany(mappedBy = "medicos")
     private List<UnidadeDeSaude> unidadesDeSaude;    
 
-    @ManyToMany(mappedBy = "medicos")    
+    @OneToMany(mappedBy = "medico")    
     private List<Agendamento> agendamentos;
 
     @Column

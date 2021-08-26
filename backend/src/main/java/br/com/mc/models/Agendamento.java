@@ -26,21 +26,15 @@ public class Agendamento {
 
     @ManyToOne
     private Paciente paciente;
-
-    @ManyToMany
-    @JoinTable(name = "medico_agenda_unidadedesaude", 
-      joinColumns = @JoinColumn(name = "medico_id"), 
-      inverseJoinColumns = @JoinColumn(name = "agendamento_id"))
-    private List<Medico> medicos;    
     
-    //@ManyToOne
-    //private Medico medico;
+    @ManyToOne
+    private Medico medico;
 
-    //@ManyToOne
-    //private UnidadeDeSaude unidadeDeSaude;
+    @ManyToOne
+    private UnidadeDeSaude unidadeDeSaude;
     
-    //@OneToOne(fetch = FetchType.LAZY)
-    //private Agenda agenda;    
+    @ManyToOne
+    private Agenda agenda;    
 
     @OneToOne(mappedBy = "agendamento")
     private Consulta consulta;    
